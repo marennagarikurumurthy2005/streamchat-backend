@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from .views import home
 
 # Import your views
 from accounts.views import register, login_view, forgot_password, reset_password
@@ -10,6 +11,7 @@ from chat.views import get_history  # we’ll create this
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("",home),
 
     # Auth
     path('auth/register/', register),
