@@ -52,7 +52,8 @@ def login_view(request):
     return Response({
         "message": "Login successful",
         "access": str(refresh.access_token),
-        "refresh": str(refresh)
+        "refresh": str(refresh),
+        "username": user.username,
     })
 
 

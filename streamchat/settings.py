@@ -1,5 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
+from corsheaders.defaults import default_headers
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "corsheaders",
 
     'rest_framework',
     'django_filters',
@@ -26,13 +29,32 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware", 
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+# ✅ Allow local frontend for dev
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Vite default
+    "http://127.0.0.1:5173",
+]
+
+# ✅ Allow specific headers
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "content-type",
+    "authorization",
+]
+
+# ✅ Allow credentials if needed
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'streamchat.urls'
 
@@ -91,6 +113,8 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
     ),
 }
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 
@@ -107,3 +131,6 @@ TMDB_API_KEY='559b203a81e37c843ce259d76ce571e9'
 SPOTIFY_CLIENT_ID='cfd6776e4e0045ce806566eb71a44d27'
 SPOTIFY_CLIENT_SECRET='c444dac85f02432791513be34e3c3c07'
 REDIS_URL='redis://127.0.0.1:6379'
+
+
+AUTH_USER_MODEL = "accounts.User"   # replace "yourapp" with the app name
