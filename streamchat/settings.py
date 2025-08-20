@@ -40,6 +40,13 @@ MIDDLEWARE = [
     
 ]
 
+ALLOWED_HOSTS = [
+    "streamchat-backend-ow46.onrender.com",  # your Render domain
+    "localhost",
+    "127.0.0.1",
+]
+
+
 CORS_ALLOW_ALL_ORIGINS = True
 # ✅ Allow local frontend for dev
 CORS_ALLOWED_ORIGINS = [
